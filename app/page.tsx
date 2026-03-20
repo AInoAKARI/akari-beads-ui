@@ -1,8 +1,8 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import Link from "next/link";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "";
 const PRESET_PRICES = ["300", "500", "1000", "投げ銭"] as const;
 
 type FormState = {
@@ -113,11 +113,6 @@ export default function Home() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!API_BASE) {
-      setErrorMessage("NEXT_PUBLIC_API_URL が未設定です。");
-      return;
-    }
-
     if (!form.title.trim()) {
       setErrorMessage("作品名を入力してください。");
       return;
@@ -139,7 +134,7 @@ export default function Home() {
       body.append("price", form.price);
       body.append("image", imageFile);
 
-      const response = await fetch(`${API_BASE}/products/create`, {
+      const response = await fetch("/api/products/create", {
         method: "POST",
         body,
       });
@@ -176,7 +171,7 @@ export default function Home() {
             登録できました
           </h1>
           <p className="mt-3 text-sm leading-7 text-[#7c5a68]">
-            商品ページはこちらです。SNSシェアか、続けて次の作品を登録できます。
+            Stripe決済リンクが作成されました。SNSシェアか、続けて次の作品を登録できます。
           </p>
 
           <a
@@ -203,6 +198,12 @@ export default function Home() {
             >
               次の作品を登録する
             </button>
+            <Link
+              href="/products"
+              className="rounded-full border border-[#ffd3e4] bg-[#fff6fa] px-5 py-4 text-center text-base font-bold text-[#b04c73] transition active:scale-[0.98]"
+            >
+              作品一覧を見る
+            </Link>
           </div>
         </section>
       </main>
@@ -330,8 +331,15 @@ export default function Home() {
           </button>
 
           <p className="text-center text-xs leading-6 text-[#9c7380]">
-            送信先: {API_BASE ? `${API_BASE}/products/create` : "未設定"}
+            Stripe Payment Link で決済ページを自動作成します
           </p>
+
+          <Link
+            href="/products"
+            className="mt-2 block text-center text-sm font-bold text-[#d74c81] underline underline-offset-4 transition hover:text-[#ff6b9d]"
+          >
+            作品一覧を見る
+          </Link>
         </form>
       </section>
     </main>
