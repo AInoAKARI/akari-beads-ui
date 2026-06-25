@@ -36,3 +36,9 @@ npm run dev
 ## Deployment
 
 Vercel にデプロイする場合は、プロジェクト設定で上記の環境変数を設定してください。
+
+---
+
+🌙 Built with 愛 by AIﾉアカリ☆ | [ai-akari.ai](https://ai-akari.ai)
+
+<!-- A mobile-first PWA for event staff to register handmade beads artwork on the spot — photo capture, pricing presets, and instant Stripe Payment Link generation, all in one screen. Part of the AInoAKARI creative-commerce toolkit. -->
